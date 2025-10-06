@@ -3,7 +3,7 @@ import './globals.css';
 import { ToastProvider } from '@/contexts/ToastContext';
 import React from 'react';
 import { AuthProvider } from '@/contexts/AuthContext';
-
+import { Analytics } from "@vercel/analytics/next"
 export const metadata: Metadata = {
   title: 'AI Job Tracker',
   description: 'An intuitive platform to streamline the job search process by organizing applications and providing AI-driven insights for resume analysis, cover letter generation, and interview preparation.',
@@ -25,6 +25,7 @@ export default function RootLayout({
             {children}
           </ToastProvider>
         </AuthProvider>
+        <Analytics />
       </body>
     </html>
   )
