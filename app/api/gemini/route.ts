@@ -4,8 +4,6 @@ import { NextRequest, NextResponse } from 'next/server';
 const API_KEY = process.env.API_KEY;
 
 if (!API_KEY) {
-    // This will be caught by Next.js and result in a 500 error page.
-    // It's logged on the server, not exposed to the client.
     console.error("API_KEY environment variable not set.");
     throw new Error("Server configuration error: Missing API Key.");
 }
@@ -13,7 +11,6 @@ if (!API_KEY) {
 const ai = new GoogleGenAI({ apiKey: API_KEY });
 const model = 'gemini-2.5-flash';
 
-// Re-implementing the core logic from the original service on the server.
 const analyzeResume = async (resumeText: string, jobDescription: string): Promise<string> => {
   const prompt = `
     Analyze the following resume in the context of this job description. 
@@ -33,6 +30,9 @@ const analyzeResume = async (resumeText: string, jobDescription: string): Promis
     ---
   `;
   const response = await ai.models.generateContent({ model, contents: prompt });
+  if (!response.text) {
+    throw new Error("Failed to generate response from AI model");
+  }
   return response.text;
 };
 
@@ -51,6 +51,9 @@ const generateCoverLetter = async (resumeText: string, jobDescription: string, c
     ---
   `;
   const response = await ai.models.generateContent({ model, contents: prompt });
+  if (!response.text) {
+    throw new Error("Failed to generate response from AI model");
+  }
   return response.text;
 };
 
@@ -68,9 +71,11 @@ const generateInterviewQuestions = async (jobDescription: string, role: string):
     ---
   `;
   const response = await ai.models.generateContent({ model, contents: prompt });
+  if (!response.text) {
+    throw new Error("Failed to generate response from AI model");
+  }
   return response.text;
 };
-
 
 export async function POST(request: NextRequest) {
     try {

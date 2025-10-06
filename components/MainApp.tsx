@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { JobApplication, ApplicationStatus, AIFeature } from '@/types';
+import { JobApplication, ApplicationStatus, AIFeature, ApplicationFormData } from '@/types';
 import ApplicationList from '@/components/ApplicationList';
 import ApplicationForm from '@/components/ApplicationForm';
 import JobPrepToolkitModal from '@/components/JobPrepToolkitModal';
@@ -66,11 +66,11 @@ const MainApp: React.FC = () => {
     setApplicationToEdit(null);
   };
 
-  const handleSaveApplication = async (appData: Omit<JobApplication, 'id' | '$id' | '$collectionId' | '$databaseId' | '$createdAt' | '$updatedAt' | '$permissions' | 'userId'>) => {
+  const handleSaveApplication = async (appData: ApplicationFormData) => {
     if (!user) return;
 
     try {
-        let savedApp;
+        let savedApp: JobApplication;
         const isEditing = applicationToEdit !== null;
 
         if (isEditing && applicationToEdit) {
@@ -133,7 +133,7 @@ const MainApp: React.FC = () => {
         type: 'error',
         message: 'Add a job description to generate interview questions.'
       });
-      handleOpenForm(application); // Open the form to let them add it
+      handleOpenForm(application);
       return;
     }
     setInitialToolkitState({
@@ -148,7 +148,7 @@ const MainApp: React.FC = () => {
      const appToUpdate = applications.find(app => app.id === id);
      if (!appToUpdate) return;
      
-     const { id: docId, userId, ...appData } = appToUpdate;
+     const { id: docId, userId, $id, $collectionId, $databaseId, $createdAt, $updatedAt, $permissions, ...appData } = appToUpdate;
      
      try {
         const updatedApp = await appwrite.updateApplication(docId, { ...appData, followUpDismissed: true });
@@ -172,7 +172,7 @@ const MainApp: React.FC = () => {
 
   const handleCloseToolkit = () => {
     setIsPrepToolkitOpen(false);
-    setInitialToolkitState(null); // Clear initial state on close
+    setInitialToolkitState(null);
   }
 
   return (

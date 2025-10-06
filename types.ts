@@ -21,7 +21,21 @@ export interface JobApplication extends Models.Document {
   followUpDismissed?: boolean;
   userId: string;
 }
-
+export type ApplicationFormData = {
+  company: string;
+  role: string;
+  status: ApplicationStatus;
+  dateApplied: string;
+  location?: string;
+  salary?: string;
+  link: string;
+  jobDescription?: string;
+  notes?: string;
+  followUpDate?: string;
+  followUpDismissed?: boolean;
+  contactPerson?: string;
+  contactEmail?: string;
+};
 // Represents the currently logged-in user's data from Appwrite.
 export type User = Models.User<Models.Preferences> | null;
 

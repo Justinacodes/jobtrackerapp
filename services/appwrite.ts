@@ -1,11 +1,11 @@
-import { Client, Account, Databases, ID, Query, Permission, Role, Models } from 'appwrite';
+import { Client, Account, Databases, ID, Query, Permission, Role, Models, OAuthProvider } from 'appwrite';
 import { JobApplication } from '@/types';
 
 const endpoint = process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT;
 const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID;
 
 if (!endpoint || !projectId) {
-  throw new Error("Appwrite endpoint or project ID is not configured in environment variables.");
+    throw new Error("Appwrite endpoint or project ID is not configured in environment variables.");
 }
 
 const client = new Client();
@@ -19,7 +19,7 @@ const DATABASE_ID = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID;
 const APPLICATIONS_COLLECTION_ID = process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID;
 
 if (!DATABASE_ID || !APPLICATIONS_COLLECTION_ID) {
-  throw new Error("Database ID or Collection ID is not configured in environment variables.");
+    throw new Error("Database ID or Collection ID is not configured in environment variables.");
 }
 
 // --- Authentication ---
@@ -33,7 +33,9 @@ export const createGoogleSession = () => {
     const successUrl = `${window.location.origin}/`; 
     // The failure URL can redirect back to the home page as well.
     const failureUrl = `${window.location.origin}/`;
-    account.createOAuth2Session('google', successUrl, failureUrl);
+    
+    // FIX: Using OAuthProvider.Google resolves the TypeScript error.
+    account.createOAuth2Session(OAuthProvider.Google, successUrl, failureUrl);
 };
 
 
@@ -63,7 +65,7 @@ export const addApplication = async (userId: string, data: ApplicationData): Pro
             Permission.delete(Role.user(userId)),
         ]
     );
-    return { ...doc, id: doc.$id } as JobApplication;
+    return { ...doc, id: doc.$id } as unknown as JobApplication;
 };
 
 export const updateApplication = async (documentId: string, data: ApplicationData): Promise<JobApplication> => {
@@ -73,7 +75,7 @@ export const updateApplication = async (documentId: string, data: ApplicationDat
         documentId,
         data
     );
-    return { ...doc, id: doc.$id } as JobApplication;
+    return { ...doc, id: doc.$id } as unknown as JobApplication;
 };
 
 export const deleteApplication = (documentId: string): Promise<{}> => {

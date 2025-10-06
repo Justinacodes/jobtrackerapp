@@ -5,7 +5,7 @@ import { JobApplication, ApplicationStatus } from '@/types';
 import Button from '@/components/Button';
 import { motion, AnimatePresence } from 'framer-motion';
 
-type ApplicationFormData = Omit<JobApplication, 'id' | '$id' | '$collectionId' | '$databaseId' | '$createdAt' | '$updatedAt' | '$permissions' | 'userId'>
+type ApplicationFormData = Omit<JobApplication, 'id' | '$id' | '$collectionId' | '$databaseId' | '$createdAt' | '$updatedAt' | '$permissions' | 'userId' | '$sequence'>
 
 interface ApplicationFormProps {
   isOpen: boolean;
