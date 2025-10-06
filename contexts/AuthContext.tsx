@@ -8,8 +8,8 @@ import Spinner from '@/components/Spinner';
 interface AuthContextType {
   user: User;
   isLoading: boolean;
-  login: (email, password) => Promise<void>;
-  signup: (email, password, name) => Promise<void>;
+  login: (email: any, password: any) => Promise<void>;
+  signup: (email: any, password: any, name: any) => Promise<void>;
   logout: () => Promise<void>;
   googleLogin: () => void;
 }
@@ -35,13 +35,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     checkSession();
   }, []);
 
-  const login = async (email, password) => {
+  const login = async (email: any, password: any) => {
     await appwrite.login(email, password);
     const currentUser = await appwrite.getAccount();
     setUser(currentUser);
   };
 
-  const signup = async (email, password, name) => {
+  const signup = async (email: any, password: any, name: any) => {
     await appwrite.signup(email, password, name);
     await login(email, password);
   };
