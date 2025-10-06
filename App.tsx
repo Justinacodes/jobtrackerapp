@@ -4,7 +4,6 @@ import MainApp from './components/MainApp';
 import { AnimatePresence } from 'framer-motion';
 // FIX: Import useAuth hook to consume the authentication context.
 import { useAuth } from './hooks/useAuth';
-//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
 
 const App: React.FC = () => {
   // FIX: Use the user object from the authentication context as the source of truth.
