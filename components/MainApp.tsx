@@ -193,7 +193,7 @@ const MainApp: React.FC = () => {
             <LogoutIcon className="h-4 w-4" />
             <span>Logout</span>
           </button>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-500">
+          <h1 className="text-2xl sm:text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-500">
             AI Job Tracker
           </h1>
           <p className="mt-2 text-lg text-slate-600">Welcome, {user?.name}! Streamline your job hunt.</p>

@@ -33,7 +33,7 @@ const Toast: React.FC<ToastProps> = ({ toast, onRemove }) => {
       initial={{ opacity: 0, y: 50, scale: 0.3 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
-      className="flex items-start w-full max-w-sm p-4 mt-2 bg-white border border-slate-200 rounded-lg shadow-lg"
+      className="flex items-start w-full max-w-sm p-4 mt-7 bg-white border border-slate-200 rounded-lg shadow-lg"
     >
       <div className="flex-shrink-0">{ICONS[toast.type]}</div>
       <div className="ml-3 w-0 flex-1 pt-0.5">
